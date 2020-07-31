@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,14 +28,13 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(FirstFragment.this)
-//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//            }
-//        });
+        // Linking the elements in the layout to Java code
+        View mCityLabel = (TextView) view.findViewById(R.id.locationTV);
+        View mWeatherImage = (ImageView) view.findViewById(R.id.weatherSymbolIV);
+        View mTemperatureLabel = (TextView) view.findViewById(R.id.tempTV);
 
+        // search button
+        View searchButton = view.findViewById(R.id.search);
         view.findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

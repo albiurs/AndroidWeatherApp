@@ -1,4 +1,6 @@
 <resources>
+
+<!-- app strings -->
     <string name="app_name">Android Weather App</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
@@ -15,4 +17,14 @@
     <string name="hello_second_fragment">Hello second fragment</string>
 <!--    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>-->
     <string name="hello_third_fragment">Hello third fragment</string>
+
+<!-- geo strings -->
+    <string name="default_location">Fetching Location</string>
+    <string name="default_temp">NA</string>
+    <string name="change_city_description">Click Here to Change City</string>
+    <string name="weather_description">This is the weather symbol</string>
+    <string name="back_button_description">Dismiss Change City Screen</string>
+    <string name="get_weather">Change City</string>
+    <string name="default_query">Enter city name</string>
+
 </resources>
