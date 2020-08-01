@@ -2,6 +2,7 @@ package ch.zhaw.androidweatherapp;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.util.Log;
 import android.view.View;
@@ -102,9 +104,39 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    // TODO: Add onResume() here:
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Clima", "onResume() called");
+        Intent myIntent = getIntent();
+        String city = myIntent.getStringExtra("City");
+        if(city!= null)
+            getWeatherForNewCity(city);
+        else {
+            Log.d("Clima", "Getting weather for current location");
+            getWeatherForCurrentLocation();
+        }
+    }
+
+
+    // TODO: Add getWeatherForNewCity(String city) here:
+    private void getWeatherForNewCity(String city){
+        RequestParams params = new RequestParams();
+        params.put("q", city);
+        params.put("appid", APP_ID);
+        letsdosomenetworking(params);
+
+    }
+
+
+
     // TODO: Add getWeatherForCurrentLocation() here:
     private void getWeatherForCurrentLocation() {
-        LocationManager mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Log.d("Clima", "getWeatherForCurrentLocation() called");
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Log.d("Clima", "mLocationManager initialized");
+        Log.d("Clima", "start initialization of mLocationListener");
         mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -135,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Clima", "onProviderDisabled callback received");
             }
         };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -145,6 +177,14 @@ public class MainActivity extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE );
             return;
+        }*/
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        if(permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            // ask permissions here using below code
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE);
         }
 
         mLocationManager.requestLocationUpdates(LOCATION_PROVIDER, MIN_TIME, MIN_DISTANCE, mLocationListener);
