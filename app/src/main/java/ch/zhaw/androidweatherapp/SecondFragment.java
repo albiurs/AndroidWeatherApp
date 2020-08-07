@@ -48,21 +48,40 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.d("Clima", "FirstFragment.onViewCreated() called");
         // Linking the elements in the layout to Java code
         mCityLabel = (TextView) view.findViewById(R.id.locationTV);
         mWeatherImage = (ImageView) view.findViewById(R.id.weatherSymbolIV);
         mTemperatureLabel = (TextView) view.findViewById(R.id.tempTV);
 
-        Log.d("Clima", "Latitude is " + latitude);
-        Log.d("Clima", "Longitude is "+ longitude);
-        Log.d("Clima", "APP_ID is "+ APP_ID);
+        if(MainActivity.isIsCitySearch() == false) {
 
-        RequestParams params = new RequestParams();
-        params.put("lat", latitude);
-        params.put("lon", longitude);
-        params.put("appid", APP_ID);
-        letsDoSomeNetworking(params);
+            // search for the current geolocation
+            Log.d("Clima", "FirstFragment.onViewCreated() called");
+
+            Log.d("Clima", "Latitude is " + latitude);
+            Log.d("Clima", "Longitude is "+ longitude);
+            Log.d("Clima", "APP_ID is "+ APP_ID);
+
+            RequestParams params = new RequestParams();
+            params.put("lat", latitude);
+            params.put("lon", longitude);
+            params.put("appid", APP_ID);
+            letsDoSomeNetworking(params);
+
+        } else {
+
+            // search for entered city
+            getWeatherForNewCity(MainActivity.getCity());
+
+        }
+
+        view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(SecondFragment.this)
+                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+            }
+        });
 
         view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,13 +91,17 @@ public class SecondFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
-            }
-        });
+    }
+
+
+
+    // TODO: Add getWeatherForNewCity(String city) here:
+    private void getWeatherForNewCity(String city){
+        RequestParams params = new RequestParams();
+        params.put("q", city);
+        params.put("appid", APP_ID);
+        letsDoSomeNetworking(params);
+
     }
 
 

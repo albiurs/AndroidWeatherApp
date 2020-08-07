@@ -9,8 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import com.loopj.android.http.RequestParams;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -40,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
 
+    private static boolean isCitySearch;
     private static String latitude;
     private static String longitude;
+    private static String city;
 
     // TODO: Set LOCATION_PROVIDER here:
     String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
@@ -99,45 +99,46 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Clima", "onResume() called");
-        Intent myIntent = getIntent();
-        String city = myIntent.getStringExtra("City");
-        if(city!= null)
-            getWeatherForNewCity(city);
+        Log.d("Debug", "onResume() called");
+//        Intent myIntent = getIntent();
+//        String city = myIntent.getStringExtra("City");
+        if(this.city != null) {
+//            getWeatherForNewCity(city);
+        }
         else {
-            Log.d("Clima", "Getting weather for current location");
-            getWeatherForCurrentLocation();
+            Log.d("Debug", "Getting weather for current location");
+            getCurrentLocation();
         }
     }
 
 
-    // TODO: Add getWeatherForNewCity(String city) here:
-    private void getWeatherForNewCity(String city){
-        RequestParams params = new RequestParams();
-        params.put("q", city);
-        params.put("appid", APP_ID);
-//        letsdosomenetworking(params);
-
-    }
+//    // TODO: Add getWeatherForNewCity(String city) here:
+//    private void getWeatherForNewCity(String city){
+//        RequestParams params = new RequestParams();
+//        params.put("q", city);
+//        params.put("appid", APP_ID);
+////        letsdosomenetworking(params);
+//
+//    }
 
 
 
     // TODO: Add getWeatherForCurrentLocation() here:
-    private void getWeatherForCurrentLocation() {
-        Log.d("Clima", "getWeatherForCurrentLocation() called");
+    private void getCurrentLocation() {
+        Log.d("Debug", "getWeatherForCurrentLocation() called");
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Log.d("Clima", "mLocationManager initialized");
-        Log.d("Clima", "start initialization of mLocationListener");
+        Log.d("Debug", "mLocationManager initialized");
+        Log.d("Debug", "start initialization of mLocationListener");
         mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Log.d("Clima", "onLocationChanged() callback received");
+                Log.d("Debug", "onLocationChanged() callback received");
                 longitude =  String.valueOf(location.getLongitude());
                 latitude =  String.valueOf(location.getLatitude());
-                Log.d("Clima", "Current geolocation updated!");
-                Log.d("Clima", "Latitude is " + latitude);
-                Log.d("Clima", "Longitude is "+ longitude);
-                Log.d("Clima", "APP_ID is "+ APP_ID);
+                Log.d("Debug", "Current geolocation updated!");
+                Log.d("Debug", "Latitude is " + latitude);
+                Log.d("Debug", "Longitude is "+ longitude);
+                Log.d("Debug", "APP_ID is "+ APP_ID);
 
 
 //                RequestParams params = new RequestParams();
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onProviderDisabled(String s) {
-                Log.d("Clima", "onProviderDisabled callback received");
+                Log.d("Debug", "onProviderDisabled callback received");
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -189,44 +190,17 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == REQUEST_CODE){
             if(grantResults.length >0 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
-                Log.d("Clima", "onRequestPermissionsResult() : Permission granted ");
-                getWeatherForCurrentLocation();
+                Log.d("Debug", "onRequestPermissionsResult() : Permission granted ");
+                getCurrentLocation();
             } else{
-                Log.d("Clima", "Permission Denied =( ");
+                Log.d("Debug", "Permission Denied =( ");
             }
 
         }
 
     }
 
-    // TODO: Add letsDoSomeNetworking(RequestParams params) here:
-    /*private void letsdosomenetworking(RequestParams params){
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(constants.WEATHER_URL, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("Clima", "Success JSON " +response.toString());
-                WeatherDataModel weatherData = WeatherDataModel.fromJSon(response);
-                firstFragment.updateUI(weatherData);
-            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e , JSONObject response){
-                Log.e("Clima", "Fail: " + e.toString());
-                Log.d("Clima", "status code: " +statusCode);
-                Toast.makeText(MainActivity.this, "Request Failed", Toast.LENGTH_SHORT);
-            }
 
-        });
-    }*/
-
-
-    // TODO: Add updateUI() here:
-//    private void updateUI(WeatherDataModel weather){
-//        mTemperatureLabel.setText(weather.getTemperature());
-//        mCityLabel.setText(weather.getCity());
-//        int resourceID = getResources().getIdentifier(weather.getIconName(), "drawable", getPackageName());
-//        mWeatherImage.setImageResource(resourceID);
-//    }
 
 
     // == getter & setter ==
@@ -236,5 +210,21 @@ public class MainActivity extends AppCompatActivity {
 
     public static String getLatitude() {
         return latitude;
+    }
+
+    public static String getCity() {
+        return city;
+    }
+
+    public static void setCity(String city) {
+        MainActivity.city = city;
+    }
+
+    public static boolean isIsCitySearch() {
+        return isCitySearch;
+    }
+
+    public static void setIsCitySearch(boolean isCitySearch) {
+        MainActivity.isCitySearch = isCitySearch;
     }
 }

@@ -7,6 +7,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ import cz.msebera.android.httpclient.Header;
 public class FirstFragment extends Fragment {
 
     // == fields ==
+    private String newCity;
 
     @Override
     public View onCreateView(
@@ -42,11 +45,38 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final EditText edittext = (EditText)view.findViewById(R.id.queryET);
+//        final Button submit = (Button)view.findViewById(R.id.submit);
+
+        edittext.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    //do what you want on the press of 'done'
+
+                    MainActivity.setIsCitySearch(true);
+
+                    newCity = edittext.getText().toString();
+                    Log.d("Debug", "newCity = " + newCity);
+                    MainActivity.setCity(newCity);
+
+                    NavHostFragment.findNavController(FirstFragment.this)
+                            .navigate(R.id.action_FirstFragment_to_SecondFragment);
+
+//                    submit.performClick();
+                }
+                return false;
+            }
+        });
+
+
         // Button for current location§
         View geolocationButton = view.findViewById(R.id.geoloc_btn);
         view.findViewById(R.id.geoloc_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                MainActivity.setIsCitySearch(false);
+
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }

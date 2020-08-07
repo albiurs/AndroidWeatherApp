@@ -27,5 +27,7 @@
     <string name="back_button_description">Dismiss Change City Screen</string>
     <string name="get_weather">Change City</string>
     <string name="enter_city_name">Enter city name</string>
+    <string name="submit">SUBMIT!</string>
+
 
 </resources>
