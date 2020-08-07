@@ -25,7 +25,7 @@ public class SecondFragment extends Fragment {
     // == fields ==
     private String latitude = MainActivity.getLatitude();
     private String longitude = MainActivity.getLongitude();
-    private String APP_ID = MainActivity.APP_ID;
+    private String APP_ID = MainActivity.API_KEY;
     private String WEATHER_URL = MainActivity.WEATHER_URL;
 
     // Member Variables:

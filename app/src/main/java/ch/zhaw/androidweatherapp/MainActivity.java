@@ -2,7 +2,6 @@ package ch.zhaw.androidweatherapp;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,30 +24,24 @@ public class MainActivity extends AppCompatActivity {
     // == Constants ==
     public static final int REQUEST_CODE = 123;
     public static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
-    // App ID to use OpenWeather data
-    public static final String APP_ID = "60d819cb54eb39eea4acbe37553a63e0";     // API Urs
-//    public static final String APP_ID = "a523d6a0fec60928cb0db13f0b555336";     // API Mark
-    // Time between location updates (5000 milliseconds or 5 seconds)
-    public static final long MIN_TIME = 5000;
-    // Distance between location updates (1000m or 1km)
-    public static final float MIN_DISTANCE = 1000;
+    public static final String API_KEY = "60d819cb54eb39eea4acbe37553a63e0";     // OpenWeather API key Urs
+//    public static final String API_KEY = "a523d6a0fec60928cb0db13f0b555336";     // OpenWeather API key Mark
+    public static final long MIN_TIME = 5000;   // min. time between location updates = 5000 ms
+    public static final float MIN_DISTANCE = 1000;  // min. distance between locations before update = 1000m
+
+
 
     // == fields ==
-    // TODO: Declare a LocationManager and a LocationListener here:
-    private LocationManager mLocationManager;
-    private LocationListener mLocationListener;
-
-    private static boolean isCitySearch;
+    // geolocation
+    private LocationManager locationManager;    //
+    private LocationListener locationListener;
+    private String locationProvider = locationManager.GPS_PROVIDER;
     private static String latitude;
     private static String longitude;
-    private static String city;
 
-    // TODO: Set LOCATION_PROVIDER here:
-    String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
-    // Member Variables:
-//    TextView mCityLabel;
-//    ImageView mWeatherImage;
-//    TextView mTemperatureLabel;
+    // city search
+    private static boolean isCitySearch;
+    private static String city;
 
 
 
@@ -112,24 +105,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    // TODO: Add getWeatherForNewCity(String city) here:
-//    private void getWeatherForNewCity(String city){
-//        RequestParams params = new RequestParams();
-//        params.put("q", city);
-//        params.put("appid", APP_ID);
-////        letsdosomenetworking(params);
-//
-//    }
-
-
-
     // TODO: Add getWeatherForCurrentLocation() here:
     private void getCurrentLocation() {
         Log.d("Debug", "getWeatherForCurrentLocation() called");
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Log.d("Debug", "mLocationManager initialized");
         Log.d("Debug", "start initialization of mLocationListener");
-        mLocationListener = new LocationListener() {
+
+        locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 Log.d("Debug", "onLocationChanged() callback received");
@@ -138,23 +121,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Debug", "Current geolocation updated!");
                 Log.d("Debug", "Latitude is " + latitude);
                 Log.d("Debug", "Longitude is "+ longitude);
-                Log.d("Debug", "APP_ID is "+ APP_ID);
-
-
-//                RequestParams params = new RequestParams();
-//                params.put("lat", constants.getLatitude());
-//                params.put("lon", constants.getLongitude());
-//                params.put("appid", constants.APP_ID);
-//                letsdosomenetworking(params);
+                Log.d("Debug", "APP_ID is "+ API_KEY);
             }
+
             @Override
             public void onStatusChanged(String s, int i, Bundle bundle) {
-
+                // do nothing
             }
 
             @Override
             public void onProviderEnabled(String s) {
-
+                // do nothing
             }
 
             @Override
@@ -162,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Debug", "onProviderDisabled callback received");
             }
         };
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -182,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_CODE);
         }
 
-        mLocationManager.requestLocationUpdates(LOCATION_PROVIDER, MIN_TIME, MIN_DISTANCE, mLocationListener);
+        locationManager.requestLocationUpdates(locationProvider, MIN_TIME, MIN_DISTANCE, locationListener);
     }
 
     @Override
