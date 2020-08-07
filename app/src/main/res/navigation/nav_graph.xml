@@ -15,16 +15,7 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
-<!--    <fragment-->
-<!--        android:id="@+id/search"-->
-<!--        android:name="ch.zhaw.androidweatherapp.FirstFragment"-->
-<!--        android:label="@string/first_fragment_label"-->
-<!--        tools:layout="@layout/fragment_first">-->
 
-<!--        <action-->
-<!--            android:id="@+id/action_FirstFragment_to_SecondFragment"-->
-<!--            app:destination="@id/SecondFragment" />-->
-<!--    </fragment>-->
     <fragment
         android:id="@+id/SecondFragment"
         android:name="ch.zhaw.androidweatherapp.SecondFragment"
@@ -38,6 +29,7 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/ThirdFragment"
         android:name="ch.zhaw.androidweatherapp.ThirdFragment"
