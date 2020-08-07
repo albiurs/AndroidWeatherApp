@@ -7,13 +7,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import androidx.annotation.NonNull;
@@ -21,24 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
-import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
-
-import static android.provider.UserDictionary.Words.APP_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -78,13 +60,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FirstFragment fragment  = new FirstFragment();
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.add(R.id.nav_graph, fragment);
-//        fragmentTransaction.commit();
-
 
 //        FloatingActionButton fab = findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -132,27 +107,6 @@ public class MainActivity extends AppCompatActivity {
         else {
             Log.d("Clima", "Getting weather for current location");
             getWeatherForCurrentLocation();
-
-
-
-            // Reload current fragment
-//            Fragment frg = null;
-//            Fragment firstFragment = getSupportFragmentManager().findFragmentByTag("first_fragment_tag");
-//            final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//            ft.detach(frg);
-//            ft.attach(frg);
-//            ft.commit();
-
-
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .detach(firstFragment)
-//                    .commitNowAllowingStateLoss();
-//
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .attach(firstFragment)
-//                    .commitAllowingStateLoss();
         }
     }
 
