@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE = 123;
     public static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
     // App ID to use OpenWeather data
-    public static final String APP_ID = "60d819cb54eb39eea4acbe37553a63e0";
+    public static final String APP_ID = "60d819cb54eb39eea4acbe37553a63e0";     // API Urs
+//    public static final String APP_ID = "a523d6a0fec60928cb0db13f0b555336";     // API Mark
     // Time between location updates (5000 milliseconds or 5 seconds)
     public static final long MIN_TIME = 5000;
     // Distance between location updates (1000m or 1km)
