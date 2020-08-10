@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/queryET"
+        android:id="@+id/citySearchQuery"
         android:layout_width="0dp"
         android:layout_height="60dp"
 
