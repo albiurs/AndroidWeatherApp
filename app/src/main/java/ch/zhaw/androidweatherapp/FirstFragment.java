@@ -26,7 +26,6 @@ public class FirstFragment extends Fragment {
 
 
     // == main public methods ==
-
     /**
      * onCreateView()
      * @param inflater
@@ -97,6 +96,9 @@ public class FirstFragment extends Fragment {
     }
 
 
+
+
+    // == private methods ==
     /**
      * navigateToSecondFragment()
      * Handles the navigation to the second fragment.
