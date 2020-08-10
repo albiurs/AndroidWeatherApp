@@ -22,51 +22,74 @@ import cz.msebera.android.httpclient.Header;
 
 public class SecondFragment extends Fragment {
 
+
+
+
     // == fields ==
-    private String latitude = MainActivity.getLatitude();
-    private String longitude = MainActivity.getLongitude();
+    // static MainActivity constants & variables
     private String APP_ID = MainActivity.API_KEY;
     private String WEATHER_URL = MainActivity.WEATHER_URL;
+    private boolean isCitySearch = MainActivity.isIsCitySearch();
+    private String latitude = MainActivity.getLatitude();
+    private String longitude = MainActivity.getLongitude();
 
-    // Member Variables:
-    TextView mCityLabel;
-    ImageView mWeatherImage;
-    TextView mTemperatureLabel;
+    // view labels
+    private TextView cityLabel;
+    private ImageView weatherImageLabel;
+    private TextView temperatureLabel;
+
+
 
 
     // == main public methods ==
 
+    /**
+     * onCreateView()
+     * @param inflater  LayoutINflater
+     * @param container ViewGroup container
+     * @param savedInstanceState Bundle savedInstanceState
+     * @return  attacheToRoot: true/false
+     */
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        // Inflate the layout for this fragment
+        // Inflate the layout "R.layout.fragment_second" for this fragment
         return inflater.inflate(R.layout.fragment_second, container, false);
     }
 
+
+    /**
+     * onViewCreated()
+     * @param view
+     * @param savedInstanceState
+     */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Linking the elements in the layout to Java code
-        mCityLabel = (TextView) view.findViewById(R.id.locationTV);
-        mWeatherImage = (ImageView) view.findViewById(R.id.weatherSymbolIV);
-        mTemperatureLabel = (TextView) view.findViewById(R.id.tempTV);
+        // initialize the view labels
+        cityLabel = view.findViewById(R.id.locationTV);
+        weatherImageLabel = view.findViewById(R.id.weatherSymbolIV);
+        temperatureLabel = view.findViewById(R.id.tempTV);
 
-        if(MainActivity.isIsCitySearch() == false) {
+        /*
+        Handle weather search
+         */
+        if(isCitySearch == false) {
 
             // search for the current geolocation
-            Log.d("Clima", "FirstFragment.onViewCreated() called");
+            Log.d("Debug", "FirstFragment.onViewCreated() called");
 
-            Log.d("Clima", "Latitude is " + latitude);
-            Log.d("Clima", "Longitude is "+ longitude);
-            Log.d("Clima", "APP_ID is "+ APP_ID);
+            Log.d("Debug", "Latitude is " + latitude);
+            Log.d("Debug", "Longitude is "+ longitude);
+            Log.d("Debug", "APP_ID is "+ APP_ID);
 
             RequestParams params = new RequestParams();
             params.put("lat", latitude);
             params.put("lon", longitude);
             params.put("appid", APP_ID);
-            letsDoSomeNetworking(params);
+            fetchJson(params);
 
         } else {
 
@@ -75,6 +98,9 @@ public class SecondFragment extends Fragment {
 
         }
 
+        /*
+        Handle back button
+         */
         view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,57 +108,58 @@ public class SecondFragment extends Fragment {
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
-
-        view.findViewById(R.id.button_second).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(SecondFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_ThirdFragment);
-            }
-        });
-
     }
 
 
-
-    // TODO: Add getWeatherForNewCity(String city) here:
+    /**
+     * getWeatherForNewCity()
+     * Triggers the fetch of new JSON data.
+     * @param city
+     */
     private void getWeatherForNewCity(String city){
         RequestParams params = new RequestParams();
         params.put("q", city);
         params.put("appid", APP_ID);
-        letsDoSomeNetworking(params);
-
+        fetchJson(params);
     }
 
 
-
-    // TODO: Add letsDoSomeNetworking(RequestParams params) here:
-    private void letsDoSomeNetworking(RequestParams params) {
+    /**
+     * fetchJson()
+     * Fetches the JSON file from the source @ openweathermap.org and
+     * triggers the UI update.
+     * @param params
+     */
+    private void fetchJson(RequestParams params) {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("Clima", "Success JSON " + response.toString());
+                Log.d("Debug", "Success JSON " + response.toString());
                 WeatherDataModel weatherData = WeatherDataModel.fromJSon(response);
-                updateUI(weatherData);
+                Log.d("Debug", "UI update will be triggered...");
+                uiUpdate(weatherData);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
-                Log.e("Clima", "Fail: " + e.toString());
-                Log.d("Clima", "status code: " + statusCode);
-//                Toast.makeText(FirstFragment.this, "Request Failed", Toast.LENGTH_SHORT);
+                Log.e("Debug", "JSON fetch failed with exception: " + e.toString());
+                Log.d("Debug", "status code: " + statusCode);
             }
 
         });
     }
 
-    // TODO: Add updateUI() here:
-    private void updateUI(WeatherDataModel weather){
-        mTemperatureLabel.setText(weather.getTemperature());
-        mCityLabel.setText(weather.getCity());
-//        int resourceID = getResources().getIdentifier(weather.getIconName(), "drawable", getPackageName());
+    /**
+     * uiUpdate()
+     * @param weather
+     */
+    private void uiUpdate(WeatherDataModel weather){
+        temperatureLabel.setText(weather.getTemperature()); // set temp
+        cityLabel.setText(weather.getCity());               // set city
+
+        // set image dynamically by resource id
         int resourceID = getResources().getIdentifier(weather.getIconName(), "drawable", getContext().getPackageName());
-        mWeatherImage.setImageResource(resourceID);
+        weatherImageLabel.setImageResource(resourceID);
     }
 }

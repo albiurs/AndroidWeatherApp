@@ -28,9 +28,9 @@ public class FirstFragment extends Fragment {
     // == main public methods ==
     /**
      * onCreateView()
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater  LayoutINflater
+     * @param container ViewGroup container
+     * @param savedInstanceState Bundle savedInstanceState
      * @return  attacheToRoot: true/false
      */
     @Override
