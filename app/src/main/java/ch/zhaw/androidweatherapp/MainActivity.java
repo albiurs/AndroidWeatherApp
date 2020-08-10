@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     // == main public methods ==
-
     /**
      * onCrate()
      * @param savedInstanceState Saved Instance State
