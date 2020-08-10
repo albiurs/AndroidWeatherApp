@@ -21,13 +21,17 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+
+
+
     // == Constants ==
     public static final int REQUEST_CODE = 123;
     public static final String WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
-    public static final String API_KEY = "60d819cb54eb39eea4acbe37553a63e0";     // OpenWeather API key Urs
-//    public static final String API_KEY = "a523d6a0fec60928cb0db13f0b555336";     // OpenWeather API key Mark
+//    public static final String API_KEY = "60d819cb54eb39eea4acbe37553a63e0";     // OpenWeather API key Urs
+    public static final String API_KEY = "a523d6a0fec60928cb0db13f0b555336";     // OpenWeather API key Mark
     public static final long MIN_TIME = 5000;   // min. time between location updates = 5000 ms
     public static final float MIN_DISTANCE = 1000;  // min. distance between locations before update = 1000m
+
 
 
 
@@ -45,32 +49,43 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     // == main public methods ==
+    /**
+     * onCrate()
+     * @param savedInstanceState Saved Instance State
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_main);         // load main layout
+        Toolbar toolbar = findViewById(R.id.toolbar);   // load toolbar
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        /* Set a {@link android.widget.Toolbar Toolbar} to act as the
+         * {@link androidx.appcompat.app.ActionBar} for this Activity window: */
+        setSupportActionBar(toolbar);
     }
 
+
+    /**
+     * onCreateOptionsMenu()
+     * @param menu Menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inject the menu. This adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
+
+    /**
+     * onOptionsItemSelected()
+     * @param item  Menu Item
+     * @return      true/false dependent on the action settings
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -87,41 +102,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    // TODO: Add onResume() here:
+    /**
+     * onResume()
+     * Action to be performed on app resume.
+     * Triggers the call of the current geolocation on every resume.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         Log.d("Debug", "onResume() called");
-//        Intent myIntent = getIntent();
-//        String city = myIntent.getStringExtra("City");
-        if(this.city != null) {
-//            getWeatherForNewCity(city);
-        }
-        else {
-            Log.d("Debug", "Getting weather for current location");
-            getCurrentLocation();
-        }
+        Log.d("Debug", "Get current location");
+        getCurrentLocation();
     }
 
 
-    // TODO: Add getWeatherForCurrentLocation() here:
-    private void getCurrentLocation() {
-        Log.d("Debug", "getWeatherForCurrentLocation() called");
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Log.d("Debug", "mLocationManager initialized");
-        Log.d("Debug", "start initialization of mLocationListener");
 
+
+    // == geolocation-related methods ==
+    /**
+     * getCurrentLocation()
+     * Call current GPS-based geolocation.
+     */
+    private void getCurrentLocation() {
+        Log.d("Debug", "getCurrentLocation() called");
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        Log.d("Debug", "start initialization of LocationListener");
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Log.d("Debug", "onLocationChanged() callback received");
+                Log.d("Debug", "Location changed!");
                 longitude =  String.valueOf(location.getLongitude());
                 latitude =  String.valueOf(location.getLatitude());
                 Log.d("Debug", "Current geolocation updated!");
                 Log.d("Debug", "Latitude is " + latitude);
                 Log.d("Debug", "Longitude is "+ longitude);
-                Log.d("Debug", "APP_ID is "+ API_KEY);
             }
 
             @Override
@@ -136,72 +151,101 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onProviderDisabled(String s) {
-                Log.d("Debug", "onProviderDisabled callback received");
+                Log.d("Debug", "Provider is disabled");
             }
         };
 
+        // manage location access permissions
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            /* If location access permission is not given,
+             request the missing permissions.
+             See the documentation for ActivityCompat#requestPermissions:
+             https://developer.android.com/training/permissions/requesting
+             https://developer.android.com/reference/androidx/core/app/ActivityCompat */
             ActivityCompat.requestPermissions(this,new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE );
             return;
         }
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-        if(permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            // ask permissions here using below code
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_CODE);
-        }
 
+        // request location updates
         locationManager.requestLocationUpdates(locationProvider, MIN_TIME, MIN_DISTANCE, locationListener);
     }
 
+
+    /**
+     * onRequestPermissionsResult()
+     * Trigger getCrurrentLocation() in case the location update permission has previously been granted.
+     * @param requestCode   request code
+     * @param permissions   adroid.permission.ACCESS_FINE_LOCATION
+     * @param grantResults  grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d("Debug", "onRequestPermissionsResult() called");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == REQUEST_CODE){
             if(grantResults.length >0 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
-                Log.d("Debug", "onRequestPermissionsResult() : Permission granted ");
+                Log.d("Debug", "onRequestPermissionsResult(): location update permission granted ");
+                Log.d("Debug", "getCurrentLocation() is to be called!");
                 getCurrentLocation();
             } else{
-                Log.d("Debug", "Permission Denied =( ");
+                Log.d("Debug", "location update permission denied!");
             }
-
         }
-
     }
 
 
 
 
-    // == getter & setter ==
+    // == getters & setters ==
+    /**
+     * getLongitude()
+     * @return longitude
+     */
     public static String getLongitude() {
         return longitude;
     }
 
+
+    /**
+     * getLatitude()
+     * @return latitude
+     */
     public static String getLatitude() {
         return latitude;
     }
 
+
+    /**
+     * getCity()
+     * @return city
+     */
     public static String getCity() {
         return city;
     }
 
+
+    /**
+     * setCity()
+     * @param city city
+     */
     public static void setCity(String city) {
         MainActivity.city = city;
     }
 
+
+    /**
+     * isIsCitySearch()
+     * @return true, if the current search is a city search; false if it's a long/lat search
+     */
     public static boolean isIsCitySearch() {
         return isCitySearch;
     }
 
+
+    /**
+     * setIsCitySearch()
+     * @param isCitySearch if it is a city search -> true; if it's a long/lat search -> false
+     */
     public static void setIsCitySearch(boolean isCitySearch) {
         MainActivity.isCitySearch = isCitySearch;
     }
