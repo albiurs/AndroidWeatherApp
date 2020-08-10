@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/FirstFragment"
     android:tag="first_fragment_tag"
+    android:background="@drawable/ic_apple_310438"
     tools:context=".FirstFragment">
 
     <TextView
@@ -21,8 +22,8 @@
 
     <Button
         android:id="@+id/geoloc_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="212dp"
+        android:layout_height="65dp"
         android:layout_marginTop="64dp"
         android:text="Current Location"
         app:layout_constraintEnd_toEndOf="parent"
