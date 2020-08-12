@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/FirstFragment"
     android:tag="first_fragment_tag"
-    android:background="@drawable/ic_apple_310438"
+    android:background="@drawable/sky_281668_1280"
     tools:context=".FirstFragment">
 
     <TextView
