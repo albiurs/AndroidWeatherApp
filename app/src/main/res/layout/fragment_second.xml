@@ -17,45 +17,41 @@
         android:layout_marginTop="32dp"
         android:text="@string/default_location"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="40sp"
         android:textColor="@color/design_default_color_background"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/weatherSymbolIV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
 
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
         android:contentDescription="@string/weather_description"
         android:src="@drawable/ic_question"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tempTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="198dp"
+        android:layout_height="77dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="220dp"
         android:shadowColor="#FFFFFF"
         android:text="@string/default_temp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/design_default_color_background"
-        android:textSize="65sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationTV" />
+        android:textSize="48sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weatherSymbolIV" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/back"

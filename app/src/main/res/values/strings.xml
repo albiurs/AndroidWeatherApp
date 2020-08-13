@@ -21,7 +21,7 @@
 <!-- geo strings -->
     <string name="search_title">Get the Weather!</string>
     <string name="default_location">Fetching Location</string>
-    <string name="default_temp">Temp??</string>
+    <string name="default_temp"></string>
     <string name="change_city_description">Click Here to Change City</string>
     <string name="weather_description">This is the weather symbol</string>
     <string name="back_button_description">Dismiss Change City Screen</string>
