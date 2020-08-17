@@ -1,4 +1,4 @@
-package ch.zhaw.androidweatherapp;
+package ch.zhaw.androidweatherapp.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +18,22 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import ch.zhaw.androidweatherapp.MainActivity;
+import ch.zhaw.androidweatherapp.R;
+import ch.zhaw.androidweatherapp.model.WeatherDataModelImpl;
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * SecondFragment
+ * onCreateView()
+ * onViewCreated()
+ * getWeatherForNewCity()
+ * fetchJson()
+ * updateView()
+ *
+ * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
+ * @version 1.0
+ */
 public class SecondFragment extends Fragment {
 
 
@@ -38,11 +52,13 @@ public class SecondFragment extends Fragment {
     private ImageView weatherImageLabel;
     private TextView temperatureLabel;
 
+    // objects
+    private WeatherDataModelImpl weatherDataModelImpl;
 
 
 
-    // == main public methods ==
 
+    // == public methods ==
     /**
      * onCreateView()
      * @param inflater  LayoutINflater
@@ -62,16 +78,19 @@ public class SecondFragment extends Fragment {
 
     /**
      * onViewCreated()
-     * @param view
-     * @param savedInstanceState
+     * @param view view
+     * @param savedInstanceState saved instance status
      */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // initialize the view labels
-        cityLabel = view.findViewById(R.id.locationTV);
-        weatherImageLabel = view.findViewById(R.id.weatherSymbolIV);
-        temperatureLabel = view.findViewById(R.id.tempTV);
+        this.cityLabel = view.findViewById(R.id.locationTV);
+        this.weatherImageLabel = view.findViewById(R.id.weatherSymbolIV);
+        this.temperatureLabel = view.findViewById(R.id.tempTV);
+
+        // initialize objects
+        this.weatherDataModelImpl = new WeatherDataModelImpl();
 
         /*
         Handle weather search
@@ -85,11 +104,11 @@ public class SecondFragment extends Fragment {
             Log.d("Debug", "Longitude is "+ longitude);
             Log.d("Debug", "APP_ID is "+ APP_ID);
 
-            RequestParams params = new RequestParams();
-            params.put("lat", latitude);
-            params.put("lon", longitude);
-            params.put("appid", APP_ID);
-            fetchJson(params);
+            RequestParams requestParams = new RequestParams();
+            requestParams.put("lat", latitude);
+            requestParams.put("lon", longitude);
+            requestParams.put("appid", APP_ID);
+            fetchJson(requestParams);
 
         } else {
 
@@ -134,11 +153,11 @@ public class SecondFragment extends Fragment {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("Debug", "Success JSON " + response.toString());
-                WeatherDataModel weatherData = WeatherDataModel.fromJSon(response);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                Log.d("Debug", "Success JSON " + jsonObject.toString());
+                weatherDataModelImpl.parseWeatherDataFromJson(jsonObject);
                 Log.d("Debug", "UI update will be triggered...");
-                uiUpdate(weatherData);
+                updateView();
             }
 
             @Override
@@ -151,15 +170,15 @@ public class SecondFragment extends Fragment {
     }
 
     /**
-     * uiUpdate()
-     * @param weather
+     * updateView()
+     * Updates the fragment view with current weather data.
      */
-    private void uiUpdate(WeatherDataModel weather){
-        temperatureLabel.setText(weather.getTemperature()); // set temp
-        cityLabel.setText(weather.getCity());               // set city
+    private void updateView(){
+        temperatureLabel.setText(weatherDataModelImpl.getTemperature()); // set temp
+        cityLabel.setText(weatherDataModelImpl.getCity());               // set city
 
         // set image dynamically by resource id
-        int resourceID = getResources().getIdentifier(weather.getIconName(), "drawable", getContext().getPackageName());
+        int resourceID = getResources().getIdentifier(weatherDataModelImpl.getIconName(), "drawable", getContext().getPackageName());
         weatherImageLabel.setImageResource(resourceID);
     }
 }

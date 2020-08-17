@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="ch.zhaw.androidweatherapp.FirstFragment"
+        android:name="ch.zhaw.androidweatherapp.view.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
 
@@ -18,26 +18,11 @@
 
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="ch.zhaw.androidweatherapp.SecondFragment"
+        android:name="ch.zhaw.androidweatherapp.view.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_ThirdFragment"
-            app:destination="@id/ThirdFragment" />
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/ThirdFragment"
-        android:name="ch.zhaw.androidweatherapp.ThirdFragment"
-        android:label="@string/third_fragment_label"
-        tools:layout="@layout/fragment_third">
-
-        <action
-            android:id="@+id/action_ThirdFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>
