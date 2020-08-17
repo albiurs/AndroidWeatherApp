@@ -7,7 +7,7 @@
     android:id="@+id/FirstFragment"
     android:tag="first_fragment_tag"
     android:background="@drawable/sky_281668_1280"
-    tools:context=".FirstFragment">
+    tools:context=".view.FirstFragment">
 
     <TextView
         android:id="@+id/textView"

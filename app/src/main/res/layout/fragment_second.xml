@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sky_281668_1280"
-    tools:context=".SecondFragment">
+    tools:context=".view.SecondFragment">
 
     <TextView
         android:id="@+id/locationTV"

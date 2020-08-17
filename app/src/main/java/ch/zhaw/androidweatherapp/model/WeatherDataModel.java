@@ -1,7 +1,9 @@
-package ch.zhaw.androidweatherapp;
+package ch.zhaw.androidweatherapp.model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import ch.zhaw.androidweatherapp.controller.WeatherDataController;
 
 public class WeatherDataModel {
 

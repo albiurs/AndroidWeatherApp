@@ -1,4 +1,4 @@
-package ch.zhaw.androidweatherapp;
+package ch.zhaw.androidweatherapp.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+
+import ch.zhaw.androidweatherapp.MainActivity;
+import ch.zhaw.androidweatherapp.R;
 
 public class FirstFragment extends Fragment {
 

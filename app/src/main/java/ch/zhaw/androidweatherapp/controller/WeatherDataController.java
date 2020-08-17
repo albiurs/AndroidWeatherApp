@@ -1,4 +1,4 @@
-package ch.zhaw.androidweatherapp;
+package ch.zhaw.androidweatherapp.controller;
 
 public class WeatherDataController {
 

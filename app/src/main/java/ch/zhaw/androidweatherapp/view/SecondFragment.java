@@ -1,4 +1,4 @@
-package ch.zhaw.androidweatherapp;
+package ch.zhaw.androidweatherapp.view;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +18,9 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
 
+import ch.zhaw.androidweatherapp.MainActivity;
+import ch.zhaw.androidweatherapp.R;
+import ch.zhaw.androidweatherapp.model.WeatherDataModel;
 import cz.msebera.android.httpclient.Header;
 
 public class SecondFragment extends Fragment {
