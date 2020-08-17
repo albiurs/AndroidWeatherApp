@@ -17,7 +17,11 @@ public class WeatherDataController {
 
     // == public methods ==
 
-    // TODO: Uncomment to this to get the weather image name from the condition:
+    /**
+     *
+     * @param condition
+     * @return
+     */
     public String updateWeatherIcon(int condition) {
 
         if (condition >= 0 && condition < 300) {

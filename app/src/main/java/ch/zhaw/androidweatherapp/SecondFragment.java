@@ -39,7 +39,7 @@ public class SecondFragment extends Fragment {
     private TextView temperatureLabel;
 
     // objects
-    WeatherDataModel weatherDataModel;
+    private WeatherDataModel weatherDataModel;
 
 
 
@@ -142,7 +142,7 @@ public class SecondFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                 Log.d("Debug", "Success JSON " + jsonObject.toString());
-                weatherDataModel.fromJSon(jsonObject);
+                weatherDataModel.parseWeatherDataFromJson(jsonObject);
                 Log.d("Debug", "UI update will be triggered...");
                 uiUpdate();
             }
