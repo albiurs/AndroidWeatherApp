@@ -20,9 +20,20 @@ import org.json.JSONObject;
 
 import ch.zhaw.androidweatherapp.MainActivity;
 import ch.zhaw.androidweatherapp.R;
-import ch.zhaw.androidweatherapp.model.WeatherDataModel;
+import ch.zhaw.androidweatherapp.model.WeatherDataModelImpl;
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * SecondFragment
+ * onCreateView()
+ * onViewCreated()
+ * getWeatherForNewCity()
+ * fetchJson()
+ * updateView()
+ *
+ * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
+ * @version 1.0
+ */
 public class SecondFragment extends Fragment {
 
 
@@ -42,13 +53,12 @@ public class SecondFragment extends Fragment {
     private TextView temperatureLabel;
 
     // objects
-    private WeatherDataModel weatherDataModel;
+    private WeatherDataModelImpl weatherDataModelImpl;
 
 
 
 
-    // == main public methods ==
-
+    // == public methods ==
     /**
      * onCreateView()
      * @param inflater  LayoutINflater
@@ -68,19 +78,19 @@ public class SecondFragment extends Fragment {
 
     /**
      * onViewCreated()
-     * @param view
-     * @param savedInstanceState
+     * @param view view
+     * @param savedInstanceState saved instance status
      */
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         // initialize the view labels
-        cityLabel = view.findViewById(R.id.locationTV);
-        weatherImageLabel = view.findViewById(R.id.weatherSymbolIV);
-        temperatureLabel = view.findViewById(R.id.tempTV);
+        this.cityLabel = view.findViewById(R.id.locationTV);
+        this.weatherImageLabel = view.findViewById(R.id.weatherSymbolIV);
+        this.temperatureLabel = view.findViewById(R.id.tempTV);
 
         // initialize objects
-        weatherDataModel = new WeatherDataModel();
+        this.weatherDataModelImpl = new WeatherDataModelImpl();
 
         /*
         Handle weather search
@@ -145,9 +155,9 @@ public class SecondFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                 Log.d("Debug", "Success JSON " + jsonObject.toString());
-                weatherDataModel.parseWeatherDataFromJson(jsonObject);
+                weatherDataModelImpl.parseWeatherDataFromJson(jsonObject);
                 Log.d("Debug", "UI update will be triggered...");
-                uiUpdate();
+                updateView();
             }
 
             @Override
@@ -160,14 +170,15 @@ public class SecondFragment extends Fragment {
     }
 
     /**
-     * uiUpdate()
+     * updateView()
+     * Updates the fragment view with current weather data.
      */
-    private void uiUpdate(){
-        temperatureLabel.setText(weatherDataModel.getTemperature()); // set temp
-        cityLabel.setText(weatherDataModel.getCity());               // set city
+    private void updateView(){
+        temperatureLabel.setText(weatherDataModelImpl.getTemperature()); // set temp
+        cityLabel.setText(weatherDataModelImpl.getCity());               // set city
 
         // set image dynamically by resource id
-        int resourceID = getResources().getIdentifier(weatherDataModel.getIconName(), "drawable", getContext().getPackageName());
+        int resourceID = getResources().getIdentifier(weatherDataModelImpl.getIconName(), "drawable", getContext().getPackageName());
         weatherImageLabel.setImageResource(resourceID);
     }
 }

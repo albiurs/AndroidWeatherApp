@@ -18,9 +18,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * MainActivity
+ * onCreate()
+ * onCreateOptionsMenu()
+ * onOptionsItemSelected()
+ * onResume()
+ * getCurrentLocation()
+ * onRequestPermissionsResult()
+ * getters & setters methods
+ *
+ * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
+ * @version 1.0
+ */
 public class MainActivity extends AppCompatActivity {
-
-
 
 
     // == Constants ==
@@ -30,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String API_KEY = "a523d6a0fec60928cb0db13f0b555336";     // OpenWeather API key Mark
     public static final long MIN_TIME = 5000;   // min. time between location updates = 5000 ms
     public static final float MIN_DISTANCE = 1000;  // min. distance between locations before update = 1000m
-
 
 
 
@@ -45,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     // city search
     private static boolean isCitySearch;
     private static String city;
-
 
 
 

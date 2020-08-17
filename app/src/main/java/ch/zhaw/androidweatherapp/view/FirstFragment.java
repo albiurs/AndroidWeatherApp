@@ -17,9 +17,16 @@ import androidx.navigation.fragment.NavHostFragment;
 import ch.zhaw.androidweatherapp.MainActivity;
 import ch.zhaw.androidweatherapp.R;
 
+/**
+ * FirstFragment
+ * onCreateView()
+ * onViewCreated()
+ * navigateToSecondFragment()
+ *
+ * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
+ * @version 1.0
+ */
 public class FirstFragment extends Fragment {
-
-
 
 
     // == fields ==
@@ -27,8 +34,7 @@ public class FirstFragment extends Fragment {
 
 
 
-
-    // == main public methods ==
+    // == public methods ==
     /**
      * onCreateView()
      * @param inflater  LayoutINflater
