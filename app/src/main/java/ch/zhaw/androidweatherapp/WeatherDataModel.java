@@ -22,27 +22,28 @@ public class WeatherDataModel {
     public WeatherDataModel() {
 
         weatherDataController = new WeatherDataController();
+
+        this.temperature = null;
+        this.city = null;
+        this.iconName = null;
+        this.weatherCondition = -1;
     }
 
 
 
     // == public methods ==
 
-    // TODO: Create a WeatherDataModel from a JSON:
-    public WeatherDataModel fromJSon(JSONObject jsonObject) {
+    public void fromJSon(JSONObject jsonObject) {
         try {
-            WeatherDataModel weatherData = new WeatherDataModel();
-            weatherData.city = jsonObject.getString("name");
-            weatherData.weatherCondition = jsonObject.getJSONArray("weather").getJSONObject(0).getInt("id");
-            weatherData.iconName = weatherDataController.updateWeatherIcon(weatherData.weatherCondition);
+            city = jsonObject.getString("name");
+            weatherCondition = jsonObject.getJSONArray("weather").getJSONObject(0).getInt("id");
+            iconName = weatherDataController.updateWeatherIcon(weatherCondition);
             double tempResult = (jsonObject.getJSONObject("main").getDouble("temp") - 273.15);
             int roundedResult = (int) Math.rint(tempResult);
-            weatherData.temperature = Integer.toString(roundedResult);
+            temperature = Integer.toString(roundedResult);
 
-            return weatherData;
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
         }
     }
 

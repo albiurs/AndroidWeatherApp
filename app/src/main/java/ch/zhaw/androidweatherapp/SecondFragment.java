@@ -76,7 +76,7 @@ public class SecondFragment extends Fragment {
         weatherImageLabel = view.findViewById(R.id.weatherSymbolIV);
         temperatureLabel = view.findViewById(R.id.tempTV);
 
-        // initalize objects
+        // initialize objects
         weatherDataModel = new WeatherDataModel();
 
         /*
@@ -140,11 +140,11 @@ public class SecondFragment extends Fragment {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("Debug", "Success JSON " + response.toString());
-                weatherDataModel = weatherDataModel.fromJSon(response);
+            public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
+                Log.d("Debug", "Success JSON " + jsonObject.toString());
+                weatherDataModel.fromJSon(jsonObject);
                 Log.d("Debug", "UI update will be triggered...");
-                uiUpdate(weatherDataModel);
+                uiUpdate();
             }
 
             @Override
@@ -158,14 +158,13 @@ public class SecondFragment extends Fragment {
 
     /**
      * uiUpdate()
-     * @param weather
      */
-    private void uiUpdate(WeatherDataModel weather){
-        temperatureLabel.setText(weather.getTemperature()); // set temp
-        cityLabel.setText(weather.getCity());               // set city
+    private void uiUpdate(){
+        temperatureLabel.setText(weatherDataModel.getTemperature()); // set temp
+        cityLabel.setText(weatherDataModel.getCity());               // set city
 
         // set image dynamically by resource id
-        int resourceID = getResources().getIdentifier(weather.getIconName(), "drawable", getContext().getPackageName());
+        int resourceID = getResources().getIdentifier(weatherDataModel.getIconName(), "drawable", getContext().getPackageName());
         weatherImageLabel.setImageResource(resourceID);
     }
 }
