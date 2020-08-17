@@ -38,6 +38,9 @@ public class SecondFragment extends Fragment {
     private ImageView weatherImageLabel;
     private TextView temperatureLabel;
 
+    // objects
+    WeatherDataModel weatherDataModel;
+
 
 
 
@@ -73,6 +76,9 @@ public class SecondFragment extends Fragment {
         weatherImageLabel = view.findViewById(R.id.weatherSymbolIV);
         temperatureLabel = view.findViewById(R.id.tempTV);
 
+        // initalize objects
+        weatherDataModel = new WeatherDataModel();
+
         /*
         Handle weather search
          */
@@ -85,11 +91,11 @@ public class SecondFragment extends Fragment {
             Log.d("Debug", "Longitude is "+ longitude);
             Log.d("Debug", "APP_ID is "+ APP_ID);
 
-            RequestParams params = new RequestParams();
-            params.put("lat", latitude);
-            params.put("lon", longitude);
-            params.put("appid", APP_ID);
-            fetchJson(params);
+            RequestParams requestParams = new RequestParams();
+            requestParams.put("lat", latitude);
+            requestParams.put("lon", longitude);
+            requestParams.put("appid", APP_ID);
+            fetchJson(requestParams);
 
         } else {
 
@@ -136,9 +142,9 @@ public class SecondFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("Debug", "Success JSON " + response.toString());
-                WeatherDataModel weatherData = WeatherDataModel.fromJSon(response);
+                weatherDataModel = weatherDataModel.fromJSon(response);
                 Log.d("Debug", "UI update will be triggered...");
-                uiUpdate(weatherData);
+                uiUpdate(weatherDataModel);
             }
 
             @Override
