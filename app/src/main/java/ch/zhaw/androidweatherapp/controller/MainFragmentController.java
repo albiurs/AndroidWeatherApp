@@ -1,4 +1,4 @@
-package ch.zhaw.androidweatherapp.view;
+package ch.zhaw.androidweatherapp.controller;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +18,7 @@ import ch.zhaw.androidweatherapp.MainActivity;
 import ch.zhaw.androidweatherapp.R;
 
 /**
- * FirstFragment
+ * MainFragmentController
  * onCreateView()
  * onViewCreated()
  * navigateToSecondFragment()
@@ -26,7 +26,7 @@ import ch.zhaw.androidweatherapp.R;
  * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
  * @version 1.0
  */
-public class FirstFragment extends Fragment {
+public class MainFragmentController extends Fragment {
 
 
     // == fields ==
@@ -113,7 +113,7 @@ public class FirstFragment extends Fragment {
      * Handles the navigation to the second fragment.
      */
     private void navigateToSecondFragment() {
-        NavHostFragment.findNavController(FirstFragment.this)
+        NavHostFragment.findNavController(MainFragmentController.this)
                 .navigate(R.id.action_FirstFragment_to_SecondFragment);
     }
 }
