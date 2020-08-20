@@ -1,4 +1,4 @@
-package ch.zhaw.androidweatherapp.view;
+package ch.zhaw.androidweatherapp.controller;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +18,7 @@ import ch.zhaw.androidweatherapp.MainActivity;
 import ch.zhaw.androidweatherapp.R;
 
 /**
- * FirstFragment
+ * FirstFragmentController
  * onCreateView()
  * onViewCreated()
  * navigateToSecondFragment()
@@ -26,17 +26,21 @@ import ch.zhaw.androidweatherapp.R;
  * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
  * @version 1.0
  */
-public class FirstFragment extends Fragment {
+public class FirstFragmentController extends Fragment {
 
 
     // == fields ==
-    private String newCity;
+    private String city;
+
+
 
 
 
     // == public methods ==
     /**
      * onCreateView()
+     * This method is called when the view gets created.
+     * Inflates the xml layout.
      * @param inflater  LayoutINflater
      * @param container ViewGroup container
      * @param savedInstanceState Bundle savedInstanceState
@@ -54,8 +58,9 @@ public class FirstFragment extends Fragment {
 
     /**
      * onViewCreated()
-     * Handle manual city search by search query / EditText.
-     * Handle Button for current location.
+     * This method is called after the view is created.
+     * Handles manual city search by search query / EditText.
+     * Handles Button for current location.
      * @param view  View
      * @param savedInstanceState    Bundle
      */
@@ -92,9 +97,9 @@ public class FirstFragment extends Fragment {
                     MainActivity.setIsCitySearch(true);
 
                     // handle entered String
-                    newCity = editText.getText().toString();
-                    Log.d("Debug", "newCity = " + newCity);
-                    MainActivity.setCity(newCity);
+                    city = editText.getText().toString();
+                    Log.d("Debug", "newCity = " + city);
+                    MainActivity.setCity(city);
 
                     // navigation to second fragment
                     navigateToSecondFragment();
@@ -107,13 +112,15 @@ public class FirstFragment extends Fragment {
 
 
 
+
+
     // == private methods ==
     /**
      * navigateToSecondFragment()
      * Handles the navigation to the second fragment.
      */
     private void navigateToSecondFragment() {
-        NavHostFragment.findNavController(FirstFragment.this)
+        NavHostFragment.findNavController(FirstFragmentController.this)
                 .navigate(R.id.action_FirstFragment_to_SecondFragment);
     }
 }

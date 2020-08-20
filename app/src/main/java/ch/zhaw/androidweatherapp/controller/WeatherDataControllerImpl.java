@@ -4,6 +4,8 @@ package ch.zhaw.androidweatherapp.controller;
  * WeatherDataControllerImpl
  * parseWeatherIconName()
  *
+ * Methods to control and manipulate the behaviour of weather data.
+ *
  * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
  * @version 1.0
  */
