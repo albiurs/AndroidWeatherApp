@@ -31,6 +31,7 @@ public class WeatherDataControllerImpl implements WeatherDataController{
     /**
      * parseWeatherIconName()
      * Parses the icon file name required based on the weather condition value.
+     * Reference ID-descriptions: https://openweathermap.org/weather-conditions#Icon-list
      * @param condition weather condition value
      * @return  icon file name
      */
@@ -53,12 +54,12 @@ public class WeatherDataControllerImpl implements WeatherDataController{
         } else if (condition >= 502 && condition < 531) {
             return "ic_rain";
         } else if (condition >= 600 && condition <= 602) {
-            return "ic_snow"; }
-        else if (condition >= 611 && condition <= 613) {
-            return "ic_sleet"; }
-        else if (condition >= 615 && condition <= 622) {
-            return "ic_day_sleet"; }
-        else if (condition >= 701 && condition <= 771) {
+            return "ic_snow";
+        } else if (condition >= 611 && condition <= 613) {
+            return "ic_sleet";
+        } else if (condition >= 615 && condition <= 622) {
+            return "ic_day_sleet";
+        } else if (condition >= 701 && condition <= 771) {
             return "ic_fog";
         } else if (condition == 781) {
             return "ic_tornado";
@@ -69,6 +70,6 @@ public class WeatherDataControllerImpl implements WeatherDataController{
         } else if (condition >= 803 && condition <= 804) {
             return "ic_cloudy";
         }
-        return "ic_question_mark";
+        return "ic_question";
     }
 }
