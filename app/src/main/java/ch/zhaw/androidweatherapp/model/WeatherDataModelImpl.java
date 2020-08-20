@@ -3,6 +3,7 @@ package ch.zhaw.androidweatherapp.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ch.zhaw.androidweatherapp.controller.WeatherDataController;
 import ch.zhaw.androidweatherapp.controller.WeatherDataControllerImpl;
 
 /**
@@ -10,6 +11,8 @@ import ch.zhaw.androidweatherapp.controller.WeatherDataControllerImpl;
  * WeatherDataModelImpl()
  * parseWeatherDataFromJson()
  * various getters
+ *
+ * Implements the model (data holding).
  *
  * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
  * @version 1.0
@@ -25,7 +28,7 @@ public class WeatherDataModelImpl implements WeatherDataModel{
     private int weatherCondition;
 
     // objects
-    private WeatherDataControllerImpl weatherDataControllerImpl;
+    private WeatherDataController weatherDataController;
 
 
 
@@ -37,7 +40,7 @@ public class WeatherDataModelImpl implements WeatherDataModel{
     public WeatherDataModelImpl() {
 
         // init fields
-        this.weatherDataControllerImpl = new WeatherDataControllerImpl();
+        this.weatherDataController = new WeatherDataControllerImpl();
 
         this.temperature = null;
         this.city = null;
@@ -57,7 +60,7 @@ public class WeatherDataModelImpl implements WeatherDataModel{
         try {
             this.city = jsonObject.getString("name");
             this.weatherCondition = jsonObject.getJSONArray("weather").getJSONObject(0).getInt("id");
-            this.iconName = weatherDataControllerImpl.parseWeatherIconName(this.weatherCondition);
+            this.iconName = weatherDataController.parseWeatherIconName(this.weatherCondition);
             double tempResult = (jsonObject.getJSONObject("main").getDouble("temp") - 273.15);
             int roundedResult = (int) Math.rint(tempResult);
             this.temperature = Integer.toString(roundedResult);

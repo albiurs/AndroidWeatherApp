@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import ch.zhaw.androidweatherapp.MainActivity;
 import ch.zhaw.androidweatherapp.R;
+import ch.zhaw.androidweatherapp.model.WeatherDataModel;
 import ch.zhaw.androidweatherapp.model.WeatherDataModelImpl;
 import cz.msebera.android.httpclient.Header;
 
@@ -30,6 +31,9 @@ import cz.msebera.android.httpclient.Header;
  * getWeatherForNewCity()
  * fetchJson()
  * updateView()
+ *
+ * Controls the view of the second fragment layout.
+ * Implements the service methods to fetch the JSON files.
  *
  * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
  * @version 1.0
@@ -53,7 +57,7 @@ public class SecondFragmentController extends Fragment {
     private TextView temperatureLabel;
 
     // objects
-    private WeatherDataModelImpl weatherDataModelImpl;
+    private WeatherDataModel weatherDataModel;
 
 
 
@@ -61,6 +65,8 @@ public class SecondFragmentController extends Fragment {
     // == public methods ==
     /**
      * onCreateView()
+     * This method is called when the view gets created.
+     * Inflates the xml layout.
      * @param inflater  LayoutINflater
      * @param container ViewGroup container
      * @param savedInstanceState Bundle savedInstanceState
@@ -78,6 +84,9 @@ public class SecondFragmentController extends Fragment {
 
     /**
      * onViewCreated()
+     * This method is called after the view is created.
+     * Handles the trigger of the weather search (geolocation or manual city search).
+     * Handles the back button.
      * @param view view
      * @param savedInstanceState saved instance status
      */
@@ -90,10 +99,10 @@ public class SecondFragmentController extends Fragment {
         this.temperatureLabel = view.findViewById(R.id.tempTV);
 
         // initialize objects
-        this.weatherDataModelImpl = new WeatherDataModelImpl();
+        this.weatherDataModel = new WeatherDataModelImpl();
 
         /*
-        Handle weather search
+        Handle trigger of the weather search (geolocation or manual city search)
          */
         if(isCitySearch == false) {
 
@@ -135,7 +144,8 @@ public class SecondFragmentController extends Fragment {
      * Triggers the fetch of new JSON data.
      * @param city
      */
-    private void getWeatherForNewCity(String city){
+    private void getWeatherForNewCity(String city) {
+
         RequestParams params = new RequestParams();
         params.put("q", city);
         params.put("appid", APP_ID);
@@ -150,12 +160,15 @@ public class SecondFragmentController extends Fragment {
      * @param params
      */
     private void fetchJson(RequestParams params) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
+
+        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+
+        asyncHttpClient.get(WEATHER_URL, params, new JsonHttpResponseHandler() {
+
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject jsonObject) {
                 Log.d("Debug", "Success JSON " + jsonObject.toString());
-                weatherDataModelImpl.parseWeatherDataFromJson(jsonObject);
+                weatherDataModel.parseWeatherDataFromJson(jsonObject);
                 Log.d("Debug", "UI update will be triggered...");
                 updateView();
             }
@@ -165,7 +178,6 @@ public class SecondFragmentController extends Fragment {
                 Log.e("Debug", "JSON fetch failed with exception: " + e.toString());
                 Log.d("Debug", "status code: " + statusCode);
             }
-
         });
     }
 
@@ -173,12 +185,14 @@ public class SecondFragmentController extends Fragment {
      * updateView()
      * Updates the fragment view with current weather data.
      */
-    private void updateView(){
-        temperatureLabel.setText(weatherDataModelImpl.getTemperature()); // set temp
-        cityLabel.setText(weatherDataModelImpl.getCity());               // set city
+    private void updateView() {
 
-        // set image dynamically by resource id
-        int resourceID = getResources().getIdentifier(weatherDataModelImpl.getIconName(), "drawable", getContext().getPackageName());
+        // set text labels
+        temperatureLabel.setText(weatherDataModel.getTemperature()); // set temp
+        cityLabel.setText(weatherDataModel.getCity());               // set city
+
+        // set image label dynamically by resource id
+        int resourceID = getResources().getIdentifier(weatherDataModel.getIconName(), "drawable", getContext().getPackageName());
         weatherImageLabel.setImageResource(resourceID);
     }
 }

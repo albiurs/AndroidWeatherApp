@@ -30,13 +30,17 @@ public class FirstFragmentController extends Fragment {
 
 
     // == fields ==
-    private String newCity;
+    private String city;
+
+
 
 
 
     // == public methods ==
     /**
      * onCreateView()
+     * This method is called when the view gets created.
+     * Inflates the xml layout.
      * @param inflater  LayoutINflater
      * @param container ViewGroup container
      * @param savedInstanceState Bundle savedInstanceState
@@ -54,8 +58,9 @@ public class FirstFragmentController extends Fragment {
 
     /**
      * onViewCreated()
-     * Handle manual city search by search query / EditText.
-     * Handle Button for current location.
+     * This method is called after the view is created.
+     * Handles manual city search by search query / EditText.
+     * Handles Button for current location.
      * @param view  View
      * @param savedInstanceState    Bundle
      */
@@ -92,9 +97,9 @@ public class FirstFragmentController extends Fragment {
                     MainActivity.setIsCitySearch(true);
 
                     // handle entered String
-                    newCity = editText.getText().toString();
-                    Log.d("Debug", "newCity = " + newCity);
-                    MainActivity.setCity(newCity);
+                    city = editText.getText().toString();
+                    Log.d("Debug", "newCity = " + city);
+                    MainActivity.setCity(city);
 
                     // navigation to second fragment
                     navigateToSecondFragment();
@@ -103,6 +108,8 @@ public class FirstFragmentController extends Fragment {
             }
         });
     }
+
+
 
 
 

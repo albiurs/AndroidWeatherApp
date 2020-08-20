@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // == main public methods ==
+    // == public methods ==
     /**
      * onCrate()
      * @param savedInstanceState Saved Instance State
@@ -110,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+    // == override Methods ==
     /**
      * onResume()
      * Action to be performed on app resume.
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // == geolocation-related methods ==
+    // == private geolocation-related methods ==
     /**
      * getCurrentLocation()
      * Call current GPS-based geolocation.
