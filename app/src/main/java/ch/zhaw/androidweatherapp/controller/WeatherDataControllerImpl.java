@@ -36,31 +36,39 @@ public class WeatherDataControllerImpl implements WeatherDataController{
      */
     public String parseWeatherIconName(int condition) {
 
-        if (condition >= 0 && condition < 300) {
+        if (condition >= 200 && condition < 201) {
             return "ic_day_rain_thunder";
         } else if (condition >= 300 && condition < 500) {
             return "ic_day_rain";
-        } else if (condition >= 500 && condition < 600) {
-            return "ic_rain";
-        } else if (condition >= 600 && condition <= 700) {
-            return "ic_day_snow"; } else if (condition >= 701 && condition <= 771) {
-            return "ic_fog";
-        } else if (condition >= 772 && condition < 800) {
+        } else if (condition == 202) {
             return "ic_rain_thunder";
+        } else if (condition == 210) {
+            return "ic_day_rain_thunder";
+        } else if (condition >= 211 && condition <= 221) {
+            return "ic_thunder";
+        } else if (condition >= 230 && condition <= 232) {
+            return "ic_rain_thunder";
+        } else if (condition >= 300 && condition < 501) {
+            return "ic_day_rain";
+        } else if (condition >= 502 && condition < 531) {
+            return "ic_rain";
+        } else if (condition >= 600 && condition <= 602) {
+            return "ic_snow"; }
+        else if (condition >= 611 && condition <= 613) {
+            return "ic_sleet"; }
+        else if (condition >= 615 && condition <= 622) {
+            return "ic_day_sleet"; }
+        else if (condition >= 701 && condition <= 771) {
+            return "ic_fog";
+        } else if (condition == 781) {
+            return "ic_tornado";
         } else if (condition == 800) {
             return "ic_day_clear";
-        } else if (condition >= 801 && condition <= 804) {
+        } else if (condition >= 801 && condition <= 802) {
             return "ic_day_partial_cloud";
-        } else if (condition >= 900 && condition <= 902) {
-            return "ic_rain_thunder";
-        } else if (condition == 903) {
-            return "ic_snow";
-        } else if (condition == 904) {
-            return "ic_day_clear";
-        } else if (condition >= 905 && condition <= 1000) {
-            return "ic_rain_thunder";
+        } else if (condition >= 803 && condition <= 804) {
+            return "ic_cloudy";
         }
-
         return "ic_question_mark";
     }
 }
