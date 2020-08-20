@@ -24,7 +24,7 @@ import ch.zhaw.androidweatherapp.model.WeatherDataModelImpl;
 import cz.msebera.android.httpclient.Header;
 
 /**
- * ResultFragmentController
+ * SecondFragmentController
  * onCreateView()
  * onViewCreated()
  * getWeatherForNewCity()
@@ -34,7 +34,7 @@ import cz.msebera.android.httpclient.Header;
  * @author created by Urs Albisser, Mark Zurfluh on 2020-08-17
  * @version 1.0
  */
-public class ResultFragmentController extends Fragment {
+public class SecondFragmentController extends Fragment {
 
 
 
@@ -98,7 +98,7 @@ public class ResultFragmentController extends Fragment {
         if(isCitySearch == false) {
 
             // search for the current geolocation
-            Log.d("Debug", "MainFragmentController.onViewCreated() called");
+            Log.d("Debug", "FirstFragmentController.onViewCreated() called");
 
             Log.d("Debug", "Latitude is " + latitude);
             Log.d("Debug", "Longitude is "+ longitude);
@@ -123,7 +123,7 @@ public class ResultFragmentController extends Fragment {
         view.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(ResultFragmentController.this)
+                NavHostFragment.findNavController(SecondFragmentController.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);
             }
         });
