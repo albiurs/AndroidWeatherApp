@@ -81,6 +81,7 @@ public class WeatherDataModelImpl implements WeatherDataModel{
         return temperature + "°";
     }
 
+
     /**
      * getCity()
      * @return city
@@ -88,6 +89,7 @@ public class WeatherDataModelImpl implements WeatherDataModel{
     public String getCity() {
         return city;
     }
+
 
     /**
      * getIconName()

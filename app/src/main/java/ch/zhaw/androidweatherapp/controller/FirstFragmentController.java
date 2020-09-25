@@ -34,8 +34,6 @@ public class FirstFragmentController extends Fragment {
 
 
 
-
-
     // == public methods ==
     /**
      * onCreateView()
@@ -108,9 +106,6 @@ public class FirstFragmentController extends Fragment {
             }
         });
     }
-
-
-
 
 
 

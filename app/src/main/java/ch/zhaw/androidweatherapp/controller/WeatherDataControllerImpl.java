@@ -15,8 +15,9 @@ public class WeatherDataControllerImpl implements WeatherDataController{
     // == fields ==
     // no fields
 
-    // == constructors ==
 
+
+    // == constructors ==
     /**
      * WeatherDataControllerImpl()
      * Constructor
@@ -37,7 +38,7 @@ public class WeatherDataControllerImpl implements WeatherDataController{
      */
     public String parseWeatherIconName(int condition) {
 
-        if (condition >= 200 && condition < 201) {
+        if (condition == 200) {
             return "ic_day_rain_thunder";
         } else if (condition >= 300 && condition < 500) {
             return "ic_day_rain";

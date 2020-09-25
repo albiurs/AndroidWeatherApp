@@ -41,8 +41,6 @@ import cz.msebera.android.httpclient.Header;
 public class SecondFragmentController extends Fragment {
 
 
-
-
     // == fields ==
     // static MainActivity constants & variables
     private String APP_ID = MainActivity.API_KEY;
@@ -58,7 +56,6 @@ public class SecondFragmentController extends Fragment {
 
     // objects
     private WeatherDataModel weatherDataModel;
-
 
 
 
@@ -180,6 +177,7 @@ public class SecondFragmentController extends Fragment {
             }
         });
     }
+
 
     /**
      * updateView()
